@@ -39,23 +39,23 @@ ComputeDistance(movieDict[2], movieDict[4]) #calling the above function for movi
 
 
 def getNeighbors(movieID, K):   #this function defines neighbours for a specific value of K -  found out by using trial and error
-    distances = []   
+    distances = []   #take a specific movie, compare its distances(both genre and popularity) with every other movie
     for movie in movieDict:
         if (movie != movieID):
             dist = ComputeDistance(movieDict[movieID], movieDict[movie])
-            distances.append((movie, dist))	#distances added 
+            distances.append((movie, dist))	            #distances added 
     distances.sort(key=operator.itemgetter(1))   		
     neighbors = []
     for x in range(K):
         neighbors.append(distances[x][0])
     return neighbors
 
-K = 10         #here I took K=10 owing to the dataset size  
-avgRating = 0
+K = 11         #here I took K=11 owing to the dataset size  , k SHOULD BE ODD TO AVOID CONFLICT INCASE THE NEAREST NEIGHBOURS ARE IN SAME QUANTITY
+avgRating = 0    #HERE THIS SHALL TAKE THE K TOP ONES FROM THE ABOVE FUNCTION AND USE THEM FOR EVALUATION
 neighbors = getNeighbors(1, K)
 for neighbor in neighbors:
-    avgRating += movieDict[neighbor][3]   #set average rating to different movies.
-    print (movieDict[neighbor][0] + " " + str(movieDict[neighbor][3]))
+    avgRating += movieDict[neighbor][3]   #set average rating to different movies. #COMPUTE AVERAGE RATING USING THE 10 NEIGHBOURS
+    print (movieDict[neighbor][0] + " " + str(movieDict[neighbor][3]))   #
     
 avgRating /= K
 
